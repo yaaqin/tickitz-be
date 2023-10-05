@@ -176,6 +176,12 @@ app.post("/seatA", async (req, res) => {
   }
 });
 
+//endpoint user 
+//password hashing
+//akses token
+//jwt
+//env
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
