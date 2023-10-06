@@ -46,7 +46,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 //     } = req.body;
 
 //     const coba =
-//       await database`INSERT INTO movies (name, release_date, duration, genres, directed, casts, synopsis, poster) 
+//       await database`INSERT INTO movies (name, release_date, duration, genres, directed, casts, synopsis, poster)
 //       values(${name}, ${release_date}, ${duration}, ${genres}, ${directed}, ${casts}, ${synopsis}, ${poster})`;
 //     console.log(coba);
 
@@ -87,28 +87,34 @@ app.use(bodyParser.urlencoded({ extended: false }));
 //   } catch (error) {}
 // });
 
-// app.post("/user022", async (req, res) => {
-//   try {
-//     const {
-//      email
-//     } = req.body;
+app.post("/users", async (req, res) => {
+  try {
+    const {
+      first_name,
+      last_name,
+      phone_number,
+      email,
+      password,
+      photo_profile,
+    } = req.body;
 
-//     const request = await database`INSERT INTO user (email) values(${email})`;
+    const request =
+      await database`INSERT INTO users (first_name, last_name, phone_number, email, password, photo_profile) values(${first_name}, ${last_name}, ${phone_number}, ${email}, ${password}, ${photo_profile})`;
 
-//     res.status(201);
-//     res.json({
-//       status: true,
-//       message: "post data success",
-//     });
-//   } catch (error) {
-//     console.log(error);
-//     res.status(502).json({
-//       status: false,
-//       message: "any problem in your server",
-//       data: error,
-//     });
-//   }
-// });
+    res.status(201);
+    res.json({
+      status: true,
+      message: "post data user success",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(502).json({
+      status: false,
+      message: "any problem in your server",
+      data: error,
+    });
+  }
+});
 
 //endcode cinemas
 
@@ -158,7 +164,7 @@ app.post("/cinemas", async (req, res) => {
 //     const {email} = req.body;
 
 //     const coba =
-//       await database`INSERT INTO pengguna (email) 
+//       await database`INSERT INTO pengguna (email)
 //       values(${email})`;
 
 //     res.status(201);
@@ -176,7 +182,7 @@ app.post("/cinemas", async (req, res) => {
 //   }
 // });
 
-//endpoint user 
+//endpoint user
 //password hashing
 //akses token
 //jwt
