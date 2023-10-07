@@ -1,6 +1,8 @@
 // endpoint penggguna
 
 //middleware
+const database = require("..database");
+
 
 
 app.post("/pengguna", async (req, res) => {

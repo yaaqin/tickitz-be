@@ -11,27 +11,28 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // app.use(express.json())
 //endcode movie
+//get
+app.get("/movies", async (req, res) => {
+  try {
+    const request = await database`SELECT * FROM movies`;
+    res.json(request);
+  } catch (error) {}
+});
 
-// app.get("/movie", async (req, res) => {
-//   try {
-//     const request = await database`SELECT * FROM movie`;
-//     res.json(request);
-//   } catch (error) {}
-// });
+app.get("/movies/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const request = await database`SELECT * FROM movies WHERE id = ${id}`;
 
-// app.get("/movie/:id", async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const request = await database`SELECT * FROM movie WHERE id = ${id}`;
+    res.json({
+      status: true,
+      message: "get data success",
+      data: request,
+    });
+  } catch (error) {}
+});
 
-//     res.json({
-//       status: true,
-//       message: "get data success",
-//       data: request,
-//     });
-//   } catch (error) {}
-// });
-
+//post
 // app.post("/movies", async (req, res) => {
 //   try {
 //     const {
@@ -65,28 +66,60 @@ app.use(bodyParser.urlencoded({ extended: false }));
 //   }
 // });
 
-//endcode users
+//put
+app.put("/movies/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const {name, duration} = req.body
+    const request = await database`UPDATE movies SET name=${name}, duration=${duration} WHERE id=${id}`;
 
-// app.get("/users", async (req, res) => {
-//   try {
-//     const request = await database`SELECT * FROM users`;
-//     res.json(request);
-//   } catch (error) {}
-// });
+    res.json({
+      status: true,
+      message: "edit data success",
+      data: request,
+    });
+  } catch (error) {}
+});
 
-// app.get("/users/:id", async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const request = await database`SELECT * FROM users WHERE id = ${id}`;
+//delete
+app.delete("/movies/:id", async (req, res) => {
+  try {
+    const id = (req.params.id);
+    const request = await database`DELETE FROM movies WHERE id=${id}`;
 
-//     res.json({
-//       status: true,
-//       message: "get data success",
-//       data: request,
-//     });
-//   } catch (error) {}
-// });
+    res.json({
+      status: true,
+      message: "delete data success",
+      data: request,
+    });
+  } catch (error) {}
+});
 
+
+
+// endcode users
+//get
+app.get("/users", async (req, res) => {
+  try {
+    const request = await database`SELECT * FROM users`;
+    res.json(request);
+  } catch (error) {}
+});
+
+app.get("/users/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const request = await database`SELECT * FROM users WHERE id = ${id}`;
+
+    res.json({
+      status: true,
+      message: "get data success",
+      data: request,
+    });
+  } catch (error) {}
+});
+
+//post
 app.post("/users", async (req, res) => {
   try {
     const {
@@ -116,7 +149,11 @@ app.post("/users", async (req, res) => {
   }
 });
 
-//endcode cinemas
+
+
+
+
+// endcode cinemas
 
 app.get("/cinemas", async (req, res) => {
   try {

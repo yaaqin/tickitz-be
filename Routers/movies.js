@@ -1,4 +1,6 @@
 //endpoint movies
+const database = require("..database");
+
 
 app.get("/movies", async (req, res) => {
     try {
