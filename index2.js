@@ -14,16 +14,20 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 const cekJWT = (req, res, next) => {
     try {
-
-        const token = req.authorization.slice(7);
-        const decoded = jwt.verify(token, secretToken);
-
-        console.log(decode)
-
-        if(decoded){
+        const { authorization } = req.headers
+        if (authorization && authorization.startsWith('Bearer ')) {
+            const token = authorization.slice(7, authorization.length)
+            const decoded = jwt.verify(token, secretToken)
+         
+        if (decoded) {
             next()
+           } else {
+               res.status(400).json({
+                   status: false,
+               message: "TOKEN ERROR"
+            })
         }
-             
+    }
     } catch (error) {
         res.status(400).json({
             status: false,
@@ -150,12 +154,19 @@ app.post("/users/register", async (req, res) => {
 //users/me
 app.get("/users/me", cekJWT, (req, res) => {
     try {
-   
-        res.status(200).json({
-            status: true,
-            message: "token is falid",
-            data: request
-        })
+        const { authorization } = req.headers
+        if (authorization && authorization.startsWith('Bearer ')) {
+            const token = authorization.slice(7, authorization.length)
+            const decoded = jwt.verify(token, secretToken)
+
+            const request = database`SELECT * FROM users WHERE id = ${decoded.id}`
+            
+            res.status(200).json({
+                status: true,
+                message: "token is falid",
+                data: request
+            })
+        }
     } catch (error) {
       res.status(502).json({
         status: false,
