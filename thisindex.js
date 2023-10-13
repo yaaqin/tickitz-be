@@ -56,7 +56,13 @@ app.get("/movies/:id", async (req, res) => {
       message: "get data success",
       data: request,
     });
-  } catch (error) {}
+  } catch (error) {
+    res.status(502).json({
+      status: false,
+      message: "any problem in your server",
+      data: error,
+    });
+  }
 });
 
 //post
@@ -230,14 +236,14 @@ app.post("/users/register", async (req, res) => {
     res.status(201);
     res.json({
       status: true,
-      message: "post data user success",
+      message: "Register success",
     });
   }
   } catch (error) {
     console.log(error);
     res.status(502).json({
       status: false,
-      message: "any problem in your server",
+      message: "Registered fail, please make sure your data is completed",
       data: error,
     });
   }

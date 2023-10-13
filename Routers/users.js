@@ -1,35 +1,30 @@
-// endpoint penggguna
+const jwt = require('jsonwebtoken');
+const router = require("express").Router()
 
-//middleware
-const database = require("..database");
+//import controller for get response or requesst
+
+const userController = require('../controller/users');
 
 
-
-app.post("/pengguna", async (req, res) => {
-    try {
-      const {email} = req.body;
-  
-      const coba =
-        await database`INSERT INTO pengguna (email) 
-        values(${email})`;
-  
-      res.status(201);
-      res.json({
-        status: true,
-        message: "post data success",
-      });
-    } catch (error) {
-      console.log(error);
-      res.status(502).json({
-        status: false,
-        message: "any problem in your server",
-        data: error,
-      });
+const checkJWT = async (req,res,next) =>{
+  try {
+    const token = req.headers.authorization.slice(7) // get token from authoriztion and slice 7 string in the front jwt
+    const decoded = jwt.verify(token, process.env.APP_SECRET_TOKEN)
+    console.log("decoded", decoded)
+    
+    if (decoded) {
+      next()
     }
-  });
+    
+  } catch (error) {
+    res.status(401).json({
+      status : false,
+      massage : "token error",
+    })
+  }
+}
 
-//endpoint user 
-//password hashing
-//akses token
-//jwt
-//env
+router.get("/users/me", checkJWT, userController._getDetailUser);
+
+
+module.exports = router;
