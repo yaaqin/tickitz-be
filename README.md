@@ -1,10 +1,11 @@
+# Tickitz
+
 <br />
 <div align="center">
   <a href="https://tickitz-react-fe.vercel.app/" target="_blank">
     <img src="https://github.com/yaaqin/Assets/blob/main/Readme/Tickitz/tikitz.png" alt="Tickitz" width="250px">
   </a>
 
-  <h3 align="center">Tickitz</h3>
 </div>
 
 
